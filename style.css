@@ -1,0 +1,17 @@
+h1, h2 {
+  text-align: center;
+}
+
+#issues {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto 1fr;
+  gap: 10px;
+}
+
+.contents {
+  display: contents;
+}
+
+#issues h2 {
+  grid-column: span 5;
+}
