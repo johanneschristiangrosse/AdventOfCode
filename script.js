@@ -3,7 +3,7 @@ import { day_2015_12_01_issue_1 } from "./lib/issues/day_2015_12_01_issue_1.js";
 document.addEventListener("DOMContentLoaded", start)
 
 const issues = []
-issues['2015_12_01_issue_1'] = issue2015_12_01_issue_1
+issues['day_2015_12_01_issue_1'] = day_2015_12_01_issue_1
 
 function start() {
   const issueList = document.getElementById('issues')
@@ -70,7 +70,7 @@ function getIssueOneLinkControl(year, day) {
 
 function getIssueOneResultControl(year, day) {
   const control = document.createElement('span')
-  const issueKey = `${year}_12_${day.toString().padStart(2, '0')}_issue_1`
+  const issueKey = `day_${year}_12_${day.toString().padStart(2, '0')}_issue_1`
   control.innerText = issues[issueKey] ? issues[issueKey]() : ''
   return control
 }
@@ -85,7 +85,7 @@ function getIssueTwoLinkControl(year, day) {
 
 function getIssueTwoResultControl(year, day) {
   const control = document.createElement('span')
-  const issueKey = `${year}_12_${day.toString().padStart(2, '0')}_issue_2`
+  const issueKey = `day_${year}_12_${day.toString().padStart(2, '0')}_issue_2`
   control.innerText = issues[issueKey] ? issues[issueKey]() : ''
   return control
 }
