@@ -1,11 +1,13 @@
 import { day_2015_12_01_issue_1 } from "./lib/issues/day_2015_12_01_issue_1.js";
 import { day_2015_12_01_issue_2 } from "./lib/issues/day_2015_12_01_issue_2.js";
+import { day_2015_12_02_issue_1 } from "./lib/issues/day_2015_12_02_issue_1.js";
 
 document.addEventListener("DOMContentLoaded", start)
 
 const issues = []
 issues['day_2015_12_01_issue_1'] = day_2015_12_01_issue_1
 issues['day_2015_12_01_issue_2'] = day_2015_12_01_issue_2
+issues['day_2015_12_02_issue_1'] = day_2015_12_02_issue_1
 
 function start() {
   const issueList = document.getElementById('issues')
