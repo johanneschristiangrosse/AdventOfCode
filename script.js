@@ -61,10 +61,10 @@ function getDayControl(year, day) {
   const control = document.createElement('li')
   control.classList.add('contents')
   control.appendChild(getDayStringControl(year, day))
-  control.appendChild(getIssueOneLinkControl(year, day))
-  control.appendChild(getIssueOneResultControl(year, day))
-  control.appendChild(getIssueTwoLinkControl(year, day))
-  control.appendChild(getIssueTwoResultControl(year, day))
+  control.appendChild(getIssueLinkControl(year, day, 1))
+  control.appendChild(getIssueResultControl(year, day, 1))
+  control.appendChild(getIssueLinkControl(year, day, 2))
+  control.appendChild(getIssueResultControl(year, day, 2))
   return control
 }
 
@@ -74,42 +74,17 @@ function getDayStringControl(year, day) {
   return control
 }
 
-function getIssueOneLinkControl(year, day) {
+function getIssueLinkControl(year, day, issue) {
   const control = document.createElement('a')
-  control.innerText = `Issue 1:`
-  control.href = `https://adventofcode.com/${year}/day/${day}`
+  control.innerText = `Issue ${issue}:`
+  control.href = `https://adventofcode.com/${year}/day/${day}${(issue > 1 ? `#part${issue}` : '')}`
   control.setAttribute('target', '_blank')
   return control
 }
 
-function getIssueOneResultControl(year, day) {
+function getIssueResultControl(year, day, issue) {
   const control = document.createElement('span')
-  const issueKey = `day_${year}_12_${day.toString().padStart(2, '0')}_issue_1`
-
-  if (issues[issueKey]) {
-    control.appendChild(getSpinnerControl())
-    const worker = new Worker('lib/worker/executeIssue.js', { type: "module" })
-    worker.postMessage(issueKey)
-    worker.addEventListener('message', event => {
-      control.innerText = event.data.result
-      control.title = `duration: ${event.data.duration}`
-    })
-  }
-
-  return control
-}
-
-function getIssueTwoLinkControl(year, day) {
-  const control = document.createElement('a')
-  control.innerText = `Issue 2:`
-  control.href = `https://adventofcode.com/${year}/day/${day}#part2`
-  control.setAttribute('target', '_blank')
-  return control
-}
-
-function getIssueTwoResultControl(year, day) {
-  const control = document.createElement('span')
-  const issueKey = `day_${year}_12_${day.toString().padStart(2, '0')}_issue_2`
+  const issueKey = `day_${year}_12_${day.toString().padStart(2, '0')}_issue_${issue}`
 
   if (issues[issueKey]) {
     control.appendChild(getSpinnerControl())
