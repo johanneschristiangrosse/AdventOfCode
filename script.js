@@ -90,7 +90,10 @@ function getIssueOneResultControl(year, day) {
     control.appendChild(getSpinnerControl())
     const worker = new Worker('lib/worker/executeIssue.js', { type: "module" })
     worker.postMessage(issueKey)
-    worker.addEventListener('message', event => control.innerText = event.data)
+    worker.addEventListener('message', event => {
+      control.innerText = event.data.result
+      control.title = `duration: ${event.data.duration}`
+    })
   }
 
   return control
@@ -112,7 +115,10 @@ function getIssueTwoResultControl(year, day) {
     control.appendChild(getSpinnerControl())
     const worker = new Worker('lib/worker/executeIssue.js', { type: "module" })
     worker.postMessage(issueKey)
-    worker.addEventListener('message', event => control.innerText = event.data)
+    worker.addEventListener('message', event => {
+      control.innerText = event.data.result
+      control.title = `duration: ${event.data.duration}`
+    })
   }
 
   return control
