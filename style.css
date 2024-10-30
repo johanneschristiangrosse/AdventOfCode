@@ -16,3 +16,7 @@ h1, h2 {
 #issues h2 {
   grid-column: span 5;
 }
+
+.icon {
+  height: 1em;
+}

@@ -85,7 +85,14 @@ function getIssueOneLinkControl(year, day) {
 function getIssueOneResultControl(year, day) {
   const control = document.createElement('span')
   const issueKey = `day_${year}_12_${day.toString().padStart(2, '0')}_issue_1`
-  control.innerText = issues[issueKey] ? issues[issueKey]() : ''
+
+  if (issues[issueKey]) {
+    control.appendChild(getSpinnerControl())
+    const worker = new Worker('lib/worker/executeIssue.js', { type: "module" })
+    worker.postMessage(issueKey)
+    worker.addEventListener('message', event => control.innerText = event.data)
+  }
+
   return control
 }
 
@@ -100,6 +107,21 @@ function getIssueTwoLinkControl(year, day) {
 function getIssueTwoResultControl(year, day) {
   const control = document.createElement('span')
   const issueKey = `day_${year}_12_${day.toString().padStart(2, '0')}_issue_2`
-  control.innerText = issues[issueKey] ? issues[issueKey]() : ''
+
+  if (issues[issueKey]) {
+    control.appendChild(getSpinnerControl())
+    const worker = new Worker('lib/worker/executeIssue.js', { type: "module" })
+    worker.postMessage(issueKey)
+    worker.addEventListener('message', event => control.innerText = event.data)
+  }
+
+  return control
+}
+
+function getSpinnerControl() {
+  const spinnerIcon = 'https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/refs/heads/main/svg-smil/bars-rotate-fade.svg'
+  const control = document.createElement('img')
+  control.src = spinnerIcon
+  control.classList.add('icon')
   return control
 }
