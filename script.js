@@ -5,6 +5,7 @@ import { day_2015_12_02_issue_2 } from "./lib/issues/day_2015_12_02_issue_2.js";
 import { day_2015_12_03_issue_1 } from "./lib/issues/day_2015_12_03_issue_1.js";
 import { day_2015_12_03_issue_2 } from "./lib/issues/day_2015_12_03_issue_2.js";
 import { day_2015_12_04_issue_1 } from "./lib/issues/day_2015_12_04_issue_1.js";
+import { day_2015_12_04_issue_2 } from "./lib/issues/day_2015_12_04_issue_2.js";
 
 document.addEventListener("DOMContentLoaded", start)
 
@@ -16,6 +17,7 @@ issues['day_2015_12_02_issue_2'] = day_2015_12_02_issue_2
 issues['day_2015_12_03_issue_1'] = day_2015_12_03_issue_1
 issues['day_2015_12_03_issue_2'] = day_2015_12_03_issue_2
 issues['day_2015_12_04_issue_1'] = day_2015_12_04_issue_1
+issues['day_2015_12_04_issue_2'] = day_2015_12_04_issue_2
 
 function start() {
   const issueList = document.getElementById('issues')
