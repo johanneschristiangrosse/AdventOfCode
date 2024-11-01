@@ -1,22 +1,151 @@
-h1, h2 {
+:root {
+  --color: rgba(255, 255, 255, 0.952);
+  --color-dark: rgb(146, 146, 146);
+  --background-color: #222222;
+  --background-color-card: #333333;
+
+  --solved-two: green;
+  --solved-two-dark: rgb(0, 88, 0);
+  --solved-one: rgb(31, 61, 31);
+  --solved-one-dark: rgb(26, 48, 26);
+  
+  --body-padding: 1em;
+
+  --day-width: 11em;
+  --day-padding: 1em;
+  --days-gap: 1em;
+  --max-days-in-row: 5;
+}
+
+body {
+  color: var(--color);
+  background-color: var(--background-color);
+  font-family: monospace;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: calc(
+    (var(--day-width) + 2 * var(--day-padding))
+    *
+    var(--max-days-in-row)
+    +
+    (var(--days-gap) * (var(--max-days-in-row) - 1))
+    +
+    2 * var(--body-padding)
+  );
+  margin: 0 auto;
+  padding: var(--body-padding);
+  box-sizing: border-box;
+  overflow-y: scroll;
 }
 
-#issues {
-  display: grid;
-  grid-template-columns: auto auto 1fr auto 1fr;
-  gap: 10px;
-  padding: 0;
+footer {
+  margin-top: auto;
+  padding-top: 3em;
 }
 
-.contents {
-  display: contents;
+a {
+  color: unset;
 }
 
-#issues h2 {
-  grid-column: span 5;
+footer {
+  text-align: left;
+}
+
+footer>.sources>ul>li {
+  color: var(--color-dark);
+}
+
+footer>.sources>ul>li>a {
+  color: var(--color);
 }
 
 .icon {
   height: 1em;
+  vertical-align: middle;
+}
+
+.comment {
+  color: var(--color-dark);
+  font-style: italic;
+}
+
+.years, .days, .issues {
+  padding: 0;
+}
+
+.years>li, .days>li, .issues>li {
+  list-style-type: none;
+}
+
+/* ######### */
+/* # Years # */
+/* ######### */
+
+.years>li>h2 {
+  margin-top: 3em;
+}
+
+/* ######## */
+/* # Days # */
+/* ######## */
+
+.days {
+  display: flex;
+  gap: var(--days-gap);
+  flex-wrap: wrap;
+  margin: auto;
+  align-items: end;
+  justify-content: center;
+}
+
+.days>li {
+  min-width: var(--day-width);
+  max-width: var(--day-width);
+  background-color: var(--background-color-card);
+  padding: var(--day-padding);
+  border-radius: 0.5em;
+}
+
+.days>li>h3 {
+  margin-top: 0;
+}
+
+.issue-1-solved:not(.issue-2-solved),
+.issue-2-solved:not(.issue-1-solved) {
+  background-color: var(--solved-one);
+}
+
+.issue-1-solved.issue-2-solved {
+  background-color: var(--solved-two);
+}
+
+/* ########## */
+/* # Issues # */
+/* ########## */
+
+.issues>li {
+  display: flex;
+  background-color: var(--background-color);
+  border-radius: 0.5em;
+  padding: 0.25em 0.5em;
+  margin-top: 0.25em;
+}
+
+.issues>li>.result {
+  margin-left: auto;
+}
+
+.issues>li:not(.solved) {
+  color: var(--color-dark);
+}
+
+.issue-1-solved:not(.issue-2-solved)>.issues>li,
+.issue-2-solved:not(.issue-1-solved)>.issues>li {
+  background-color: var(--solved-one-dark);
+}
+
+.issue-1-solved.issue-2-solved>.issues>li {
+  background-color: var(--solved-two-dark);
 }
