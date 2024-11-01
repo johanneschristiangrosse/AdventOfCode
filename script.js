@@ -1,4 +1,5 @@
 import { issues } from "./lib/issues/index.js";
+import { getSourceListControl } from "./lib/controls/sourceListControl/sourceListControl.js"
 
 document.addEventListener("DOMContentLoaded", start)
 
@@ -8,6 +9,9 @@ function start() {
   for (let year = 2015; year <= new Date().getFullYear(); year++) {
     issueList.appendChild(getYearControl(year))
   }
+
+  const sources = document.querySelector('.sources')
+  sources.appendChild(getSourceListControl())
 }
 
 function getYearControl(year) {
