@@ -1,5 +1,6 @@
 import { issues } from "./lib/issues/index.js";
-import { getSourceListControl } from "./lib/controls/sourceListControl/sourceListControl.js"
+import { getSourceControl } from "./lib/controls/source/control.js"
+import { getImpressumControl } from "./lib/controls/impressum/control.js";
 
 document.addEventListener("DOMContentLoaded", start)
 
@@ -10,8 +11,11 @@ function start() {
     issueList.appendChild(getYearControl(year))
   }
 
-  const sources = document.querySelector('.sources')
-  sources.appendChild(getSourceListControl())
+  const footer = document.querySelector('footer')
+  footer.appendChild(document.createElement('hr'))
+  footer.appendChild(getSourceControl())
+  footer.appendChild(document.createElement('hr'))
+  footer.appendChild(getImpressumControl())
 }
 
 function getYearControl(year) {
