@@ -106,6 +106,7 @@ footer>.sources>ul>li>a {
   background-color: var(--background-color-card);
   padding: var(--day-padding);
   border-radius: 0.5em;
+  margin-right: auto;
 }
 
 .days>li>h3 {
