@@ -27,7 +27,7 @@ function getYearControl(year) {
 
 function getYearLinkControl(year) {
   const linkControl = document.createElement('a')
-  linkControl.innerText = `${year}`
+  linkControl.innerText = `December ${year}`
   linkControl.href = `https://adventofcode.com/${year}`
   linkControl.setAttribute('target', '_blank')
 
@@ -65,7 +65,7 @@ function getDayControl(year, day) {
 
 function getDayStringControl(year, day) {
   const control = document.createElement('h3')
-  control.innerText = `${day.toString().padStart(2, '0')}.12.${year}`
+  control.innerText = `${day.toString().padStart(2, '0')}`
   return control
 }
 
