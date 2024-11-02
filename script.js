@@ -1,14 +1,14 @@
-import { issues } from "./lib/issues/index.js";
+import { puzzles } from "./lib/puzzles/index.js";
 import { getSourceControl } from "./lib/controls/source/control.js"
 import { getImpressumControl } from "./lib/controls/impressum/control.js";
 
 document.addEventListener("DOMContentLoaded", start)
 
 function start() {
-  const issueList = document.querySelector('.years')
+  const years = document.querySelector('.years')
 
   for (let year = 2015; year <= new Date().getFullYear(); year++) {
-    issueList.appendChild(getYearControl(year))
+    years.appendChild(getYearControl(year))
   }
 
   const footer = document.querySelector('footer')
@@ -50,16 +50,16 @@ function getDayListControl(year) {
 function getDayControl(year, day) {
   const control = document.createElement('li')
 
-  if (issues[`day_${year}_12_${day.toString().padStart(2, '0')}_issue_1`]) {
-    control.classList.add('issue-1-solved')
+  if (puzzles[`day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_1`]) {
+    control.classList.add('puzzle-1-solved')
   }
 
-  if (issues[`day_${year}_12_${day.toString().padStart(2, '0')}_issue_2`]) {
-    control.classList.add('issue-2-solved')
+  if (puzzles[`day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_2`]) {
+    control.classList.add('puzzle-2-solved')
   }
 
   control.appendChild(getDayStringControl(year, day))
-  control.appendChild(getIssueListControl(year, day))
+  control.appendChild(getPuzzleListControl(year, day))
   return control
 }
 
@@ -69,44 +69,44 @@ function getDayStringControl(year, day) {
   return control
 }
 
-function getIssueListControl(year, day) {
+function getPuzzleListControl(year, day) {
   const control = document.createElement('ul')
-  control.classList.add('issues')
-  control.appendChild(getIssueControl(year, day, 1))
-  control.appendChild(getIssueControl(year, day, 2))
+  control.classList.add('puzzle')
+  control.appendChild(getPuzzleControl(year, day, 1))
+  control.appendChild(getPuzzleControl(year, day, 2))
   return control
 }
 
-function getIssueControl(year, day, issue) {
+function getPuzzleControl(year, day, puzzle) {
   const control = document.createElement('li')
 
-  if (issues[`day_${year}_12_${day.toString().padStart(2, '0')}_issue_${issue}`]) {
+  if (puzzles[`day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_${puzzle}`]) {
     control.classList.add('solved')
   }
 
-  control.appendChild(getIssueLinkControl(year, day, issue))
+  control.appendChild(getPuzzleLinkControl(year, day, puzzle))
   control.appendChild(document.createTextNode(': '))
-  control.appendChild(getIssueResultControl(year, day, issue))
+  control.appendChild(getPuzzleResultControl(year, day, puzzle))
   return control
 }
 
-function getIssueLinkControl(year, day, issue) {
+function getPuzzleLinkControl(year, day, puzzle) {
   const control = document.createElement('a')
-  control.innerText = `Issue ${issue}`
-  control.href = `https://adventofcode.com/${year}/day/${day}${(issue > 1 ? `#part${issue}` : '')}`
+  control.innerText = `Puzzle ${puzzle}`
+  control.href = `https://adventofcode.com/${year}/day/${day}${(puzzle > 1 ? `#part${puzzle}` : '')}`
   control.setAttribute('target', '_blank')
   return control
 }
 
-function getIssueResultControl(year, day, issue) {
+function getPuzzleResultControl(year, day, puzzle) {
   const control = document.createElement('span')
   control.classList.add('result')
-  const issueKey = `day_${year}_12_${day.toString().padStart(2, '0')}_issue_${issue}`
+  const puzzleKey = `day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_${puzzle}`
 
-  if (issues[issueKey]) {
+  if (puzzles[puzzleKey]) {
     control.appendChild(getSpinnerControl())
-    const worker = new Worker('lib/worker/executeIssue.js', { type: "module" })
-    worker.postMessage(issueKey)
+    const worker = new Worker('lib/worker/executePuzzle.js', { type: "module" })
+    worker.postMessage(puzzleKey)
     worker.addEventListener('message', event => {
       control.innerText = `${event.data.result}`
       control.title = `duration: ${event.data.duration}`

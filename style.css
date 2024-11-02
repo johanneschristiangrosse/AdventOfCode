@@ -71,11 +71,11 @@ footer>.sources>ul>li>a {
   font-style: italic;
 }
 
-.years, .days, .issues {
+.years, .days, .puzzle {
   padding: 0;
 }
 
-.years>li, .days>li, .issues>li {
+.years>li, .days>li, .puzzle>li {
   list-style-type: none;
 }
 
@@ -113,20 +113,20 @@ footer>.sources>ul>li>a {
   margin-top: 0;
 }
 
-.issue-1-solved:not(.issue-2-solved),
-.issue-2-solved:not(.issue-1-solved) {
+.puzzle-1-solved:not(.puzzle-2-solved),
+.puzzle-2-solved:not(.puzzle-1-solved) {
   background-color: var(--solved-one);
 }
 
-.issue-1-solved.issue-2-solved {
+.puzzle-1-solved.puzzle-2-solved {
   background-color: var(--solved-two);
 }
 
 /* ########## */
-/* # Issues # */
+/* # puzzle # */
 /* ########## */
 
-.issues>li {
+.puzzle>li {
   display: flex;
   background-color: var(--background-color);
   border-radius: 0.5em;
@@ -134,19 +134,19 @@ footer>.sources>ul>li>a {
   margin-top: 0.25em;
 }
 
-.issues>li>.result {
+.puzzle>li>.result {
   margin-left: auto;
 }
 
-.issues>li:not(.solved) {
+.puzzle>li:not(.solved) {
   color: var(--color-dark);
 }
 
-.issue-1-solved:not(.issue-2-solved)>.issues>li,
-.issue-2-solved:not(.issue-1-solved)>.issues>li {
+.puzzle-1-solved:not(.puzzle-2-solved)>.puzzle>li,
+.puzzle-2-solved:not(.puzzle-1-solved)>.puzzle>li {
   background-color: var(--solved-one-dark);
 }
 
-.issue-1-solved.issue-2-solved>.issues>li {
+.puzzle-1-solved.puzzle-2-solved>.puzzle>li {
   background-color: var(--solved-two-dark);
 }
