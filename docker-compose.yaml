@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    container_name: advent_of_code
+    build: .
+    ports:
+      - "8080:80"
+    restart: always
