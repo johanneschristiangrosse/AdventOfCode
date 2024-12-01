@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", start)
 function start() {
   const years = document.querySelector('.years')
 
-  for (let year = 2015; year <= new Date().getFullYear(); year++) {
+  for (let year = new Date().getFullYear(); year >= 2015; year--) {
     years.appendChild(getYearControl(year))
   }
 
