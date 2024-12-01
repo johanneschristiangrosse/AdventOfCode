@@ -1,8 +1,8 @@
-import { puzzles } from "./lib/puzzles/index.js";
-import { getSourceControl } from "./lib/controls/source/control.js"
-import { getImpressumControl } from "./lib/controls/impressum/control.js";
+import { puzzles } from './lib/puzzles/index.js'
+import { getSourceControl } from './lib/controls/source/control.js'
+import { getImpressumControl } from './lib/controls/impressum/control.js'
 
-document.addEventListener("DOMContentLoaded", start)
+document.addEventListener('DOMContentLoaded', start)
 
 function start() {
   const years = document.querySelector('.years')
@@ -105,7 +105,7 @@ function getPuzzleResultControl(year, day, puzzle) {
 
   if (puzzles[puzzleKey]) {
     control.appendChild(getSpinnerControl())
-    const worker = new Worker('lib/worker/executePuzzle.js', { type: "module" })
+    const worker = new Worker('lib/worker/executePuzzle.js', { type: 'module' })
     worker.postMessage(puzzleKey)
     worker.addEventListener('message', event => {
       control.innerText = `${event.data.result}`
