@@ -92,7 +92,8 @@ footer>.sources>ul>li>a {
 /* ######## */
 
 .days {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, calc(var(--day-width) + 2 * var(--day-padding)));
   gap: var(--days-gap);
   flex-wrap: wrap;
   margin: auto;
