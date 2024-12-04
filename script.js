@@ -14,7 +14,7 @@ function start() {
   const worker = new Worker('lib/worker/executePuzzle.js', { type: 'module' })
   Object.keys(puzzles).forEach(puzzleKey => {
     worker.addEventListener('message', event => {
-      const control = document.querySelector(`.result.${puzzleKey}`)
+      const control = years.querySelector(`.result.${puzzleKey}`)
       if (event.data.puzzleKey === puzzleKey) {
         control.innerText = `${event.data.result}`
         control.title = `duration: ${event.data.duration}`
@@ -33,7 +33,10 @@ function start() {
 function getYearControl(year) {
   const control = document.createElement('li')
   control.appendChild(getYearLinkControl(year))
+  control.appendChild(getYearPercentControl(year))
   control.appendChild(getDayListControl(year))
+  console.log((control.querySelectorAll('.solved').length * 100 / 50).toFixed(0) + ' %')
+  console.log(Object.keys(puzzles).filter(key => key.match(new RegExp(`^day_${year}_12_\\d{2}_puzzle_[12]$`))).length)
   return control
 }
 
@@ -45,6 +48,16 @@ function getYearLinkControl(year) {
 
   const control = document.createElement('h2')
   control.appendChild(linkControl)
+  return control
+}
+
+function getYearPercentControl(year) {
+  const count = Object.keys(puzzles).filter(key => key.match(new RegExp(`^day_${year}_12_\\d{2}_puzzle_[12]$`))).length
+  const control = document.createElement('span')
+  control.classList.add('comment')
+  control.innerText = `${2 * count} % solved`
+  control.appendChild(document.createElement('br'))
+  control.appendChild(document.createElement('br'))
   return control
 }
 
