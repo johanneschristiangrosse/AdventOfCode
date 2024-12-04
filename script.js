@@ -11,6 +11,18 @@ function start() {
     years.appendChild(getYearControl(year))
   }
 
+  const worker = new Worker('lib/worker/executePuzzle.js', { type: 'module' })
+  Object.keys(puzzles).forEach(puzzleKey => {
+    worker.addEventListener('message', event => {
+      const control = document.querySelector(`.result.${puzzleKey}`)
+      if (event.data.puzzleKey === puzzleKey) {
+        control.innerText = `${event.data.result}`
+        control.title = `duration: ${event.data.duration}`
+      }
+    })
+  })
+  worker.postMessage('go')
+
   const footer = document.querySelector('footer')
   footer.appendChild(document.createElement('hr'))
   footer.appendChild(getSourceControl())
@@ -102,15 +114,10 @@ function getPuzzleResultControl(year, day, puzzle) {
   const control = document.createElement('span')
   control.classList.add('result')
   const puzzleKey = `day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_${puzzle}`
+  control.classList.add(puzzleKey)
 
   if (puzzles[puzzleKey]) {
     control.appendChild(getSpinnerControl())
-    const worker = new Worker('lib/worker/executePuzzle.js', { type: 'module' })
-    worker.postMessage(puzzleKey)
-    worker.addEventListener('message', event => {
-      control.innerText = `${event.data.result}`
-      control.title = `duration: ${event.data.duration}`
-    })
   }
 
   return control
