@@ -35,8 +35,6 @@ function getYearControl(year) {
   control.appendChild(getYearLinkControl(year))
   control.appendChild(getYearPercentControl(year))
   control.appendChild(getDayListControl(year))
-  console.log((control.querySelectorAll('.solved').length * 100 / 50).toFixed(0) + ' %')
-  console.log(Object.keys(puzzles).filter(key => key.match(new RegExp(`^day_${year}_12_\\d{2}_puzzle_[12]$`))).length)
   return control
 }
 
