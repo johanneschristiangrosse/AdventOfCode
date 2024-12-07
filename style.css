@@ -83,6 +83,10 @@ footer>.sources>ul>li>a {
   white-space: nowrap;
 }
 
+.hidden {
+  display: none;
+}
+
 /* ######### */
 /* # Years # */
 /* ######### */

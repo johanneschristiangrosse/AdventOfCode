@@ -1,6 +1,7 @@
 import { puzzles } from './lib/puzzles/index.js'
 import { getSourceControl } from './lib/controls/source/control.js'
 import { getImpressumControl } from './lib/controls/impressum/control.js'
+import { getDurationString } from './lib/utility/getDurationString.js'
 
 document.addEventListener('DOMContentLoaded', start)
 
@@ -17,6 +18,8 @@ function start() {
   for (let year = currentYear; year >= firstYear; year--) {
     years.appendChild(getYearControl(year))
   }
+
+  setCountdown()
 
   const worker = new Worker('lib/worker/executePuzzle.js', { type: 'module' })
   Object.keys(puzzles).forEach(puzzleKey => {
@@ -35,6 +38,23 @@ function start() {
   footer.appendChild(getSourceControl())
   footer.appendChild(document.createElement('hr'))
   footer.appendChild(getImpressumControl())
+}
+
+async function setCountdown() {
+  const controls = document.querySelectorAll('.countdown')
+  setInterval(() => {
+    controls.forEach(control => {
+      const year = Number(control.getAttribute('data-year'))
+      const day = Number(control.getAttribute('data-day'))
+      const date = new Date(Date.parse(`${year}-12-${day.toString().padStart(2, '0')}T05:00:00+00:00`))
+      if (date >= new Date()) {
+        control.querySelector('.countdown-value').innerText = getDurationString(new Date(), date, 's', false, false)
+      } else {
+        document.querySelector(`.puzzle[data-year="${year}"][data-day="${day}"]`).classList.remove('hidden')
+        control.remove()
+      }
+    })
+  }, 100)
 }
 
 function getPercent() {
@@ -85,7 +105,9 @@ function getDayListControl(year) {
 }
 
 function getDayControl(year, day) {
+  const date = new Date(Date.parse(`${year}-12-${day.toString().padStart(2, '0')}T05:00:00+00:00`))
   const control = document.createElement('li')
+  control.appendChild(getDayStringControl(year, day))
 
   if (puzzles[`day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_1`]) {
     control.classList.add('puzzle-1-solved')
@@ -95,8 +117,39 @@ function getDayControl(year, day) {
     control.classList.add('puzzle-2-solved')
   }
 
-  control.appendChild(getDayStringControl(year, day))
-  control.appendChild(getPuzzleListControl(year, day))
+  const puzzleListControl = getPuzzleListControl(year, day)
+  control.appendChild(puzzleListControl)
+  
+  if (date >= new Date()) {
+    const countdown = getDurationString(new Date(), date, 's', false, false)
+    puzzleListControl.classList.add('hidden')
+    control.appendChild(getDayCountdownControl(year, day, countdown))
+  }
+    
+  return control
+}
+
+function getDayCountdownControl(year, day, countdown) {
+  const control = document.createElement('div')
+  control.classList.add('countdown')
+  control.setAttribute('data-year', year)
+  control.setAttribute('data-day', day)
+  control.appendChild(getDayCountdownHeadlineControl())
+  control.appendChild(document.createElement('br'))
+  control.appendChild(getDayCountdownValueControl(countdown))
+  return control
+}
+
+function getDayCountdownHeadlineControl() {
+  const control = document.createElement('b')
+  control.innerText = 'Countdown'
+  return control
+}
+
+function getDayCountdownValueControl(countdown) {
+  const control = document.createElement('span')
+  control.innerText = countdown
+  control.classList.add('countdown-value')
   return control
 }
 
@@ -109,6 +162,8 @@ function getDayStringControl(year, day) {
 function getPuzzleListControl(year, day) {
   const control = document.createElement('ul')
   control.classList.add('puzzle')
+  control.setAttribute('data-year', year)
+  control.setAttribute('data-day', day)
   control.appendChild(getPuzzleControl(year, day, 1))
   control.appendChild(getPuzzleControl(year, day, 2))
   return control
