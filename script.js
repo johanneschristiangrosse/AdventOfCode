@@ -4,10 +4,17 @@ import { getImpressumControl } from './lib/controls/impressum/control.js'
 
 document.addEventListener('DOMContentLoaded', start)
 
+const firstYear = 2015
+const currentYear = new Date().getFullYear()
+const yearCount = currentYear - firstYear + 1
+
 function start() {
+  const percent = document.querySelector('#percent')
+  percent.innerText = getPercent()
+
   const years = document.querySelector('.years')
 
-  for (let year = new Date().getFullYear(); year >= 2015; year--) {
+  for (let year = currentYear; year >= firstYear; year--) {
     years.appendChild(getYearControl(year))
   }
 
@@ -28,6 +35,13 @@ function start() {
   footer.appendChild(getSourceControl())
   footer.appendChild(document.createElement('hr'))
   footer.appendChild(getImpressumControl())
+}
+
+function getPercent() {
+  const count = Object.keys(puzzles).filter(key => key.match(new RegExp('^day_\\d{4}_12_\\d{2}_puzzle_[12]$'))).length
+  const control = document.createElement('span')
+  control.classList.add('comment')
+  return `${(2 * count / yearCount).toFixed(1)} % `
 }
 
 function getYearControl(year) {
