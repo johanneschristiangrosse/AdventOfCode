@@ -48,7 +48,7 @@ async function setCountdown() {
       const day = Number(control.getAttribute('data-day'))
       const date = new Date(Date.parse(`${year}-12-${day.toString().padStart(2, '0')}T05:00:00+00:00`))
       if (date >= new Date()) {
-        control.querySelector('.countdown-value').innerText = getDurationString(new Date(), date, 's', false, false)
+        control.innerText = getDurationString(new Date(), date, 's', false, false)
       } else {
         document.querySelector(`.puzzle[data-year="${year}"][data-day="${day}"]`).classList.remove('hidden')
         control.remove()
@@ -134,22 +134,7 @@ function getDayCountdownControl(year, day, countdown) {
   control.classList.add('countdown')
   control.setAttribute('data-year', year)
   control.setAttribute('data-day', day)
-  control.appendChild(getDayCountdownHeadlineControl())
-  control.appendChild(document.createElement('br'))
-  control.appendChild(getDayCountdownValueControl(countdown))
-  return control
-}
-
-function getDayCountdownHeadlineControl() {
-  const control = document.createElement('b')
-  control.innerText = 'Countdown'
-  return control
-}
-
-function getDayCountdownValueControl(countdown) {
-  const control = document.createElement('span')
-  control.innerText = countdown
-  control.classList.add('countdown-value')
+  control.appendChild(document.createTextNode(countdown))
   return control
 }
 
