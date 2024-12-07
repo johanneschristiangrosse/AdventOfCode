@@ -101,8 +101,6 @@ footer>.sources>ul>li>a {
   gap: var(--days-gap);
   flex-wrap: wrap;
   margin: auto;
-  align-items: end;
-  justify-content: center;
 }
 
 .days>li {
