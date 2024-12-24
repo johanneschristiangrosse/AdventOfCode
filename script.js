@@ -1,6 +1,6 @@
 import { puzzles } from './lib/puzzles/index.js'
-import { getSourceControl } from './lib/controls/source/control.js'
-import { getImpressumControl } from './lib/controls/impressum/control.js'
+import { getSourceControl } from './lib/components/source/component.js'
+import { getImpressumControl } from './lib/components/impressum/component.js'
 import { getDurationString } from './lib/utility/getDurationString.js'
 
 document.addEventListener('DOMContentLoaded', start)
