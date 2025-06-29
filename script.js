@@ -170,8 +170,7 @@ function getPuzzleControl(puzzles, year, day, puzzle) {
 function getPuzzleLinkControl(year, day, puzzle) {
   const control = document.createElement('a')
   control.innerText = `Puzzle ${puzzle}`
-  control.href = `https://adventofcode.com/${year}/day/${day}${(puzzle > 1 ? `#part${puzzle}` : '')}`
-  control.setAttribute('target', '_blank')
+  control.href = `/puzzle/?year=${year}&day=${day}&puzzle=${puzzle}`
   return control
 }
 
