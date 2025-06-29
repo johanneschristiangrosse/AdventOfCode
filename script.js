@@ -1,7 +1,8 @@
-import { loadPuzzles } from './lib/puzzles/index.js'
+import { puzzles } from './lib/puzzles/index.js'
 import { getSourceControl } from './lib/components/source/component.js'
 import { getImpressumControl } from './lib/components/impressum/component.js'
 import { getDurationString } from './lib/utility/getDurationString.js'
+
 document.addEventListener('DOMContentLoaded', start)
 
 const firstYear = 2015
@@ -9,30 +10,26 @@ const currentYear = new Date().getFullYear()
 const yearCount = currentYear - firstYear + 1
 
 async function start() {
-  const puzzles = await loadPuzzles()
-  const percent = document.querySelector('#percent')
-  percent.innerText = getPercent(puzzles)
+  setHeader()
+  setYears()
+  setFooter()
+}
 
+function setHeader() {
+  document.querySelector('#percent').innerText = getPercent(puzzles)
+}
+
+function setYears() {
   const years = document.querySelector('.years')
-
+  
   for (let year = currentYear; year >= firstYear; year--) {
     years.appendChild(getYearControl(puzzles, year))
   }
-
+  
   setCountdown()
+}
 
-  const worker = new Worker('lib/worker/executePuzzles.js', { type: 'module' })
-  Object.keys(puzzles).forEach(puzzleKey => {
-    worker.addEventListener('message', event => {
-      const control = years.querySelector(`.result.${puzzleKey}`)
-      if (event.data.puzzleKey === puzzleKey) {
-        control.innerText = `${event.data.result}`
-        control.title = `duration: ${event.data.duration}`
-      }
-    })
-  })
-  worker.postMessage('go')
-
+function setFooter() {
   const footer = document.querySelector('footer')
   footer.appendChild(document.createElement('hr'))
   footer.appendChild(getSourceControl())
@@ -109,11 +106,11 @@ function getDayControl(puzzles, year, day) {
   const control = document.createElement('li')
   control.appendChild(getDayStringControl(year, day))
 
-  if (puzzles[`day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_1`]) {
+  if (Object.prototype.hasOwnProperty.call(puzzles, `day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_1`)) {
     control.classList.add('puzzle-1-solved')
   }
 
-  if (puzzles[`day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_2`]) {
+  if (Object.prototype.hasOwnProperty.call(puzzles, `day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_2`)) {
     control.classList.add('puzzle-2-solved')
   }
 
@@ -157,7 +154,7 @@ function getPuzzleListControl(puzzles, year, day) {
 function getPuzzleControl(puzzles, year, day, puzzle) {
   const control = document.createElement('li')
 
-  if (puzzles[`day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_${puzzle}`]) {
+  if (Object.prototype.hasOwnProperty.call(puzzles, `day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_${puzzle}`)) {
     control.classList.add('solved')
   }
 
@@ -178,19 +175,10 @@ function getPuzzleResultControl(puzzles, year, day, puzzle) {
   const control = document.createElement('span')
   control.classList.add('result')
   const puzzleKey = `day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_${puzzle}`
-  control.classList.add(puzzleKey)
 
   if (puzzles[puzzleKey]) {
-    control.appendChild(getSpinnerControl())
+    control.innerText = puzzles[puzzleKey]
   }
 
-  return control
-}
-
-function getSpinnerControl() {
-  const spinnerIcon = 'https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/refs/heads/main/preview/bars-rotate-fade-white-36.svg'
-  const control = document.createElement('img')
-  control.src = spinnerIcon
-  control.classList.add('icon')
   return control
 }

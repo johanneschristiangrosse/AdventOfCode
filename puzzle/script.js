@@ -28,9 +28,9 @@ async function start() {
   worker.onmessage = async event => {
     if (event.data.type === 'status') {
       if (event.data.value === 'ok') {
-        timerId = setInterval(() => duration.innerText = getDurationString(event.data.startTime, new Date()), 10)
+        timerId = setInterval(() => duration.innerText = getDurationString(event.data.startTime, new Date()), 13)
       } else {
-        content.innerHTML = /*html*/'There is no result yet for this puzzle<br><br>]-:'
+        content.innerHTML = /*html*/`${event.data.message}<br><br>]-:`
       }
     } else if (event.data.type === 'result') {
       clearInterval(timerId)
