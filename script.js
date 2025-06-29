@@ -10,14 +10,12 @@ const yearCount = currentYear - firstYear + 1
 
 async function start() {
   const puzzles = await loadPuzzles()
-  console.log('xD')
   const percent = document.querySelector('#percent')
   percent.innerText = getPercent(puzzles)
 
   const years = document.querySelector('.years')
 
   for (let year = currentYear; year >= firstYear; year--) {
-    console.log('year')
     years.appendChild(getYearControl(puzzles, year))
   }
 
