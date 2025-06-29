@@ -10,21 +10,56 @@
 </head>
 
 <body>
-  <nav>
-    <a href="/" class="home">[Home]</a>
-  </nav>
-  <h1>
-    <a target="_blank">
-      Puzzle No. <span class="content-puzzle-number">?</span><br>
-      of<br>
-      <span class="content-year">????</span> December <span class="content-day">??</span>
-    </a>
-  </h1>
-  <div class="content">
-    <img class="icon"
-      src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/refs/heads/main/preview/bars-rotate-fade-white-36.svg">
-  </div>
-  <script type="module" src="script.js"></script>
+  <style>
+    table {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    th {
+      text-align: left;
+      padding-right: 1em;
+    }
+
+    td {
+      text-align: right;
+    }
+  </style>
+  <header>
+    <nav>
+      <a href="/" class="home">[Home]</a>
+    </nav>
+    <h1><a target="_blank" href="https://adventofcode.com/">Advent of Code</a></h1>
+    <h2>
+      <a target="_blank">
+        Puzzle No. <span class="content-puzzle-number">?</span>
+        of
+        <span class="content-year">????</span> December <span class="content-day">??</span>
+      </a>
+    </h2>
+  </header>
+  <main>
+    <div class="content">
+      <table>
+        <tr>
+          <th>Result:</th>
+          <td class="result">
+            <img class="icon"
+              src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/refs/heads/main/preview/bars-rotate-fade-white-36.svg">
+          </td>
+        </tr>
+        <tr>
+          <th>Duration:</th>
+          <td class="duration">
+            <img class="icon"
+              src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/refs/heads/main/preview/bars-rotate-fade-white-36.svg">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script type="module" src="script.js"></script>
+  </main>
+  <footer></footer>
 </body>
 
 </html>
