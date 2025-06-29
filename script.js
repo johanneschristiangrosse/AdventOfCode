@@ -1,22 +1,24 @@
-import { puzzles } from './lib/puzzles/index.js'
+import { loadPuzzles } from './lib/puzzles/index.js'
 import { getSourceControl } from './lib/components/source/component.js'
 import { getImpressumControl } from './lib/components/impressum/component.js'
 import { getDurationString } from './lib/utility/getDurationString.js'
-
 document.addEventListener('DOMContentLoaded', start)
 
 const firstYear = 2015
 const currentYear = new Date().getFullYear()
 const yearCount = currentYear - firstYear + 1
 
-function start() {
+async function start() {
+  const puzzles = await loadPuzzles()
+  console.log('xD')
   const percent = document.querySelector('#percent')
-  percent.innerText = getPercent()
+  percent.innerText = getPercent(puzzles)
 
   const years = document.querySelector('.years')
 
   for (let year = currentYear; year >= firstYear; year--) {
-    years.appendChild(getYearControl(year))
+    console.log('year')
+    years.appendChild(getYearControl(puzzles, year))
   }
 
   setCountdown()
@@ -57,18 +59,18 @@ async function setCountdown() {
   }, 100)
 }
 
-function getPercent() {
+function getPercent(puzzles) {
   const count = Object.keys(puzzles).filter(key => key.match(new RegExp('^day_\\d{4}_12_\\d{2}_puzzle_[12]$'))).length
   const control = document.createElement('span')
   control.classList.add('comment')
   return `${(2 * count / yearCount).toFixed(1)} % `
 }
 
-function getYearControl(year) {
+function getYearControl(puzzles, year) {
   const control = document.createElement('li')
   control.appendChild(getYearLinkControl(year))
-  control.appendChild(getYearPercentControl(year))
-  control.appendChild(getDayListControl(year))
+  control.appendChild(getYearPercentControl(puzzles, year))
+  control.appendChild(getDayListControl(puzzles, year))
   return control
 }
 
@@ -83,7 +85,7 @@ function getYearLinkControl(year) {
   return control
 }
 
-function getYearPercentControl(year) {
+function getYearPercentControl(puzzles, year) {
   const count = Object.keys(puzzles).filter(key => key.match(new RegExp(`^day_${year}_12_\\d{2}_puzzle_[12]$`))).length
   const control = document.createElement('span')
   control.classList.add('comment')
@@ -93,18 +95,18 @@ function getYearPercentControl(year) {
   return control
 }
 
-function getDayListControl(year) {
+function getDayListControl(puzzles, year) {
   const control = document.createElement('ul')
   control.classList.add('days')
 
   for (let day = 1; day <= 25; day++) {
-    control.appendChild(getDayControl(year, day))
+    control.appendChild(getDayControl(puzzles, year, day))
   }
 
   return control
 }
 
-function getDayControl(year, day) {
+function getDayControl(puzzles, year, day) {
   const date = new Date(Date.parse(`${year}-12-${day.toString().padStart(2, '0')}T05:00:00+00:00`))
   const control = document.createElement('li')
   control.appendChild(getDayStringControl(year, day))
@@ -117,7 +119,7 @@ function getDayControl(year, day) {
     control.classList.add('puzzle-2-solved')
   }
 
-  const puzzleListControl = getPuzzleListControl(year, day)
+  const puzzleListControl = getPuzzleListControl(puzzles, year, day)
   control.appendChild(puzzleListControl)
   
   if (date >= new Date()) {
@@ -144,17 +146,17 @@ function getDayStringControl(year, day) {
   return control
 }
 
-function getPuzzleListControl(year, day) {
+function getPuzzleListControl(puzzles, year, day) {
   const control = document.createElement('ul')
   control.classList.add('puzzle')
   control.setAttribute('data-year', year)
   control.setAttribute('data-day', day)
-  control.appendChild(getPuzzleControl(year, day, 1))
-  control.appendChild(getPuzzleControl(year, day, 2))
+  control.appendChild(getPuzzleControl(puzzles, year, day, 1))
+  control.appendChild(getPuzzleControl(puzzles, year, day, 2))
   return control
 }
 
-function getPuzzleControl(year, day, puzzle) {
+function getPuzzleControl(puzzles, year, day, puzzle) {
   const control = document.createElement('li')
 
   if (puzzles[`day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_${puzzle}`]) {
@@ -163,7 +165,7 @@ function getPuzzleControl(year, day, puzzle) {
 
   control.appendChild(getPuzzleLinkControl(year, day, puzzle))
   control.appendChild(document.createTextNode(': '))
-  control.appendChild(getPuzzleResultControl(year, day, puzzle))
+  control.appendChild(getPuzzleResultControl(puzzles, year, day, puzzle))
   return control
 }
 
@@ -175,7 +177,7 @@ function getPuzzleLinkControl(year, day, puzzle) {
   return control
 }
 
-function getPuzzleResultControl(year, day, puzzle) {
+function getPuzzleResultControl(puzzles, year, day, puzzle) {
   const control = document.createElement('span')
   control.classList.add('result')
   const puzzleKey = `day_${year}_12_${day.toString().padStart(2, '0')}_puzzle_${puzzle}`
