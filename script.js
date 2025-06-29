@@ -21,7 +21,7 @@ async function start() {
 
   setCountdown()
 
-  const worker = new Worker('lib/worker/executePuzzle.js', { type: 'module' })
+  const worker = new Worker('lib/worker/executePuzzles.js', { type: 'module' })
   Object.keys(puzzles).forEach(puzzleKey => {
     worker.addEventListener('message', event => {
       const control = years.querySelector(`.result.${puzzleKey}`)
