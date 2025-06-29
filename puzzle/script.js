@@ -6,8 +6,11 @@ document.addEventListener('DOMContentLoaded', start)
 
 async function start() {
   const content = document.querySelector('.content')
-  const result = content.querySelector('.result')
-  const duration = content.querySelector('.duration')
+  const resultRow = content.querySelector('.result')
+  const result = resultRow.querySelector('td')
+  const correctResultRow = content.querySelector('.correct-result')
+  const correctResult = correctResultRow.querySelector('td')
+  const duration = content.querySelector('.duration>td')
   const year = new URLSearchParams(window.location.search).get('year')
   const shortDay = new URLSearchParams(window.location.search).get('day')
   const day = shortDay.toString().padStart(2, '0')
@@ -35,6 +38,12 @@ async function start() {
     } else if (event.data.type === 'result') {
       clearInterval(timerId)
       result.innerText = event.data.result
+      correctResult.innerText = event.data.originalResult
+      if (event.data.result !== event.data.originalResult) {
+        resultRow.classList.add('red')
+        resultRow.querySelector('th').innerText = 'Wrong result:'
+        correctResultRow.classList.remove('hidden')
+      }
       duration.innerText = event.data.duration
     }
   }

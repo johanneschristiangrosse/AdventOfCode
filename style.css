@@ -1,5 +1,6 @@
 :root {
   --color: rgba(255, 255, 255, 0.952);
+  --color-red: rgb(255, 0, 0);
   --color-dark: rgb(146, 146, 146);
   --background-color: #222222;
   --background-color-card: #333333;
@@ -85,6 +86,14 @@ footer>.sources>ul>li>a {
 
 .hidden {
   display: none;
+}
+
+.grey {
+  color: var(--color-dark);
+}
+
+.red {
+  color: var(--color-red);
 }
 
 /* ######### */
