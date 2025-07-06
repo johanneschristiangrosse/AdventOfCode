@@ -5,6 +5,8 @@
   --background-color-code: #1e1e1e;
   --background-color: #222222;
   --background-color-card: #333333;
+  --scrollbar-background: #333333;
+  --scrollbar-item: #222222;
 
   --solved-two: green;
   --solved-two-dark: rgb(0, 88, 0);
@@ -17,6 +19,10 @@
   --day-padding: 1em;
   --days-gap: 1em;
   --max-days-in-row: 5;
+}
+
+* {
+  scrollbar-color: var(--scrollbar-item) var(--scrollbar-background) ;
 }
 
 body {
