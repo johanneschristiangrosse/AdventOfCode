@@ -2,6 +2,8 @@ import { getDurationString } from '../lib/utility/getDurationString.js'
 import { getSourceControl } from '../lib/components/source/component.js'
 import { getImpressumControl } from '../lib/components/impressum/component.js'
 
+import { codeToHtml } from 'https://esm.sh/shiki@3.0.0'
+
 document.addEventListener('DOMContentLoaded', start)
 
 async function start() {
@@ -19,6 +21,12 @@ async function start() {
   document.querySelector('.content-year').innerText = year
   document.querySelector('.content-day').innerText = day
   document.querySelector('h2>a').href = `https://adventofcode.com/${year}/day/${shortDay}${(puzzle > 1 ? `#part${puzzle}` : '')}`
+
+  const code = await fetch(`/lib/puzzles/day_${year}_12_${day}_puzzle_${puzzle}.js`).then(x => x.text())
+  content.querySelector('.code').innerHTML = await codeToHtml(code, {
+    lang: 'js',
+    theme: 'one-dark-pro',
+  })
 
   const footer = document.querySelector('footer')
   footer.appendChild(document.createElement('hr'))

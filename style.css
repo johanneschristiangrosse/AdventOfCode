@@ -2,6 +2,7 @@
   --color: rgba(255, 255, 255, 0.952);
   --color-red: rgb(255, 0, 0);
   --color-dark: rgb(146, 146, 146);
+  --background-color-code: #1e1e1e;
   --background-color: #222222;
   --background-color-card: #333333;
 
@@ -167,4 +168,30 @@ footer>.sources>ul>li>a {
 
 .puzzle-1-solved.puzzle-2-solved>.puzzle>li {
   background-color: var(--solved-two-dark);
+}
+
+.shiki{
+  text-align: left;
+  border-radius: 1em;
+  padding: 1em;
+  background-color: var(--background-color-code) !important;
+  overflow-x: scroll;
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+.shiki .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1.5rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+  text-align: right;
+  color: rgba(115,138,148,.4)
+}
+
+details summary {
+  cursor: pointer;
+  list-style: none;
+  text-decoration: underline;
 }
