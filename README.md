@@ -1,3 +1,3 @@
 # Advent of Code
 
-[Link to page](https://johanneschristiangrosse.github.io/AdventOfCode/)
+[Link to page](https://advent-of-code.jgcl.de/)
