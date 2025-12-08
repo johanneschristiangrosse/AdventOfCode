@@ -55,5 +55,5 @@ async function start() {
       duration.innerText = event.data.duration
     }
   }
-  worker.postMessage(`day_${year}_12_${day}_puzzle_${puzzle}`)
+  worker.postMessage({ year, day, puzzle })
 }

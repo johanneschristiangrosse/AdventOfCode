@@ -1,4 +1,4 @@
-export const input = `zgsnvdmlfuplrubt
+zgsnvdmlfuplrubt
 vlhagaovgqjmgvwq
 ffumlmqwfcsyqpss
 zztdcqzqddaazdjp
@@ -997,4 +997,4 @@ hjsrvkdibdjarxxb
 sztzziuqroeidcus
 pxdfvcpvwaddrzwv
 phdqqxleqdjfgfbg
-cqfikbgxvjmnfncy`
+cqfikbgxvjmnfncy

@@ -1,4 +1,4 @@
-export const input = `lf AND lq -> ls
+lf AND lq -> ls
 iu RSHIFT 1 -> jn
 bo OR bu -> bv
 gj RSHIFT 1 -> hc
@@ -336,4 +336,4 @@ y OR ae -> af
 hf AND hl -> hn
 NOT h -> i
 NOT hn -> ho
-he RSHIFT 5 -> hh`
+he RSHIFT 5 -> hh
